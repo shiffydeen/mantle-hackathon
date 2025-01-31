@@ -9,6 +9,7 @@ import sendBtn from './assets/send.svg'
 import userIcon from './assets/user-icon.png'
 import gptImgLogo from './assets/chatgptLogo.svg'
 import mantle from './assets/mantle.svg'
+import AIlogo from './assets/AI-logo.svg'
 import { sendMessageToMantle } from './mantle'
 import { useEffect, useRef, useState } from 'react'
 
@@ -88,7 +89,7 @@ function App() {
         <div className="chats">
           {messages.map((message, i) => (
             <div key={i} className={`${message.isBot ? "chat bot" : "chat"}`}>
-              <img className='chatImg' src={message.isBot ? gptImgLogo : userIcon} alt="" />
+              <img className='chatImg' src={message.isBot ? AIlogo : userIcon} alt="" />
               <p className="txt">{message.text}</p>
             </div>
           ))}
