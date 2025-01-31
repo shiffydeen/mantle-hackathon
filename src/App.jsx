@@ -25,6 +25,40 @@ function App() {
     }
 ]);
 
+const AutoLink = (text) => {
+  const delimiter = /((?:https?:\/\/)?(?:(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}|(?:\d{1,3}\.){3}\d{1,3})(?::\d+)?(?:\/[^\s()<>]*)?)/gi;
+
+  return text.split(delimiter).map((word, index) => {
+    const match = word.match(delimiter);
+    if (match) {
+      let url = match[0];
+      
+      // Trim trailing punctuation that's not part of the URL
+      url = url.replace(/[)\]>.,!?]+$/g, '');
+
+      // Protocol handling
+      if (!/^(https?|ftp):\/\//i.test(url)) {
+        url = `http://${url}`;
+      }
+
+      // Security check
+      if (/^(javascript|data|file):/i.test(url)) return word;
+
+      return (
+        <a 
+          key={index}
+          href={url}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {url}
+        </a>
+      );
+    }
+    return word;
+  }).filter(word => word !== '');
+};
+
   useEffect(()=> {
     msgEnd.current.scrollIntoView();
   }, [messages])
@@ -37,10 +71,12 @@ function App() {
       {text, isBot: false}
     ])
     const res = await sendMessageToMantle(text);
+    // console.log(typeof res)
+    const newRes = AutoLink(res);
     setMessages([
       ...messages, 
       {text, isBot: false},
-      {text: res, isBot: true}
+      {text: newRes, isBot: true}
     ])
   }
   
@@ -55,12 +91,16 @@ function App() {
       {text, isBot: false}
     ])
     const res = await sendMessageToMantle(text);
+    newRes = AutoLink(res)
     setMessages([
       ...messages, 
       {text, isBot: false},
-      {text: res, isBot: true}
+      {text: newRes, isBot: true}
     ])
   }
+
+  // AutoLink("hello my  https://www.google.com")
+  // console.log(AutoLink)
 
   return (
     <div className='App'>
