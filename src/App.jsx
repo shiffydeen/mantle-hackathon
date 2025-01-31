@@ -1,4 +1,4 @@
-import './App.css'
+
 import gptLogo from './assets/chatgpt.svg'
 import addBtn from './assets/add-30.png'
 import msgIcon from './assets/message.svg'
@@ -13,9 +13,9 @@ import { sendMessageToMantle } from './mantle'
 import { useEffect, useRef, useState } from 'react'
 
 
+
 function App() {
   const msgEnd = useRef(null);
-
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
