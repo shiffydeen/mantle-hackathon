@@ -19,7 +19,7 @@ function App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
-      text: "Hi, I am Mantle",
+      text: "Hi, I'm your Mantle AI agent, ask me anything about the ecosystem. I can fetch you the balance and transaction details of wallets and transactions on the eth chain.",
       isBot: true,
     }
 ]);
